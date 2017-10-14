@@ -1,0 +1,126 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Transaction Tracker</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div id="wrapper">
+    <nav id="myNavbar" class="navbar navbar-default navbar-static-top" role="navigation">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbarCollapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Transaction Tracker</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Dashboard</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div id="page-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-8">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4>Add transaction</h4>
+                        </div>
+                        <div class="panel-body">
+                            <form method="POST" class="post-form">
+                                {% csrf_token %}
+                                {% if form %}
+                                    {{ form.as_table }}
+                                {% else %}
+                                    <h4>No form found</h4>
+                                {% endif %}
+                                <button type="submit" class="save btn btn-default">Save</button>
+                            </form>
+                            <table class="table">
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-xs-8">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4>Transactions</h4>
+                        </div>
+                        <div class="panel-body">
+                            <div>
+                                {% if transaction_list %}
+                                    <table class="table table-striped">
+                                    <tr>
+                                        <th>Amount</th>
+                                        <th>Category</th>
+                                        <th>Section</th>
+                                        <th>Details</th>
+                                        <th>Date</th>
+                                    </tr>
+                                    {% for transaction in transaction_list %}
+                                        <tr>
+                                            <td>R{{ transaction.amount }}</td>
+                                            <td>{{ transaction.category }}</td>
+                                            <td>{{ transaction.section }}</td>
+                                            <td>{{ transaction.details }}</td>
+                                            <td>{{ transaction.date }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                                {% else %}
+                                    <p>No transactions are available.</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4>Categories</h4>
+                        </div>
+                        <div class="panel-body">
+                            <div>
+                                {% if category_totals %}
+                                    <table class="table table-striped">
+                                    <tr>
+                                        <th>Category</th>
+                                        <th>Total</th>
+                                    </tr>
+                                    {% for key, value in category_totals.items %}
+                                        <tr>
+                                            <td>{{ key }}</td>
+                                            <td>R{{ value }}</td>
+                                        </tr>
+                                    {% endfor %}
+                                </table>
+                                {% else %}
+                                    <p>No transactions are available.</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
