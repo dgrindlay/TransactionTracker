@@ -7,6 +7,9 @@ class TransactionForm(forms.ModelForm):
         model = Transaction
         fields = '__all__'
         widgets = {
-            'amount': forms.TextInput(attrs={'size': '10'}),
+            'amount': forms.TextInput(attrs={'size': '10', 'class': 'form-control'}),
+            'category': forms.TextInput(attrs={'size': '10', 'class': 'form-control'}),
+            'section': forms.TextInput(attrs={'size': '10', 'class': 'form-control'}),
+            'details': forms.TextInput(attrs={'size': '10', 'class': 'form-control'}),
             'date': forms.SelectDateWidget(),
         }
