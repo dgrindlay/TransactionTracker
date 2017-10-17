@@ -3,7 +3,6 @@ from .models import Transaction
 from .forms import TransactionForm
 
 
-# Create your views here.
 def index(request):
     transaction_list = Transaction.objects.all()
     category_totals = dict()
@@ -12,11 +11,6 @@ def index(request):
             category_totals[transaction.category] += transaction.amount
         else:
             category_totals[transaction.category] = transaction.amount
-    if request.method == 'POST':
-        form = TransactionForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect(reverse('tracker:index'))
     form = TransactionForm
     context = {
         'transaction_list': transaction_list,
@@ -24,3 +18,10 @@ def index(request):
         'form': form,
     }
     return render(request, 'tracker/index.html', context)
+
+
+def add_transaction(request):
+    form = TransactionForm(request.POST)
+    if form.is_valid():
+        form.save()
+    return HttpResponseRedirect(reverse('tracker:index'))

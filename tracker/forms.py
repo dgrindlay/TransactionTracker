@@ -11,5 +11,5 @@ class TransactionForm(forms.ModelForm):
             'category': forms.TextInput(attrs={'size': '10', 'class': 'form-control'}),
             'section': forms.TextInput(attrs={'size': '10', 'class': 'form-control'}),
             'details': forms.TextInput(attrs={'size': '10', 'class': 'form-control'}),
-            'date': forms.SelectDateWidget(),
+            'date': forms.SelectDateWidget(attrs={'class': 'form-control', }),
         }
